@@ -8,102 +8,71 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:ital,wght@400;700&family=Montserrat:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --f-red: #8b0000;
-            --f-gold: #c5a059;
-            --f-dark: #121212;
-            --f-cream: #fdfaf5;
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        body { 
-            background-color: var(--f-cream); 
-            color: #2c2c2c; 
-            font-family: 'Lora', serif; 
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
+        :root { --f-red: #8b0000; --f-gold: #c5a059; --f-dark: #121212; --f-cream: #fdfaf5; --neon: #00ff41; --danger: #ff003c; }
+        body { background-color: var(--f-cream); color: #2c2c2c; font-family: 'Lora', serif; overflow-x: hidden; scroll-behavior: smooth; }
         h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 900; }
-        .font-sans { font-family: 'Montserrat', sans-serif; }
-
-        /* Hero */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                        url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2070');
-            background-size: cover; background-attachment: fixed; background-position: center;
-            display: flex; align-items: center; justify-content: center;
-            border-bottom: 12px solid var(--f-red);
-        }
+        
+        .hero { height: 100vh; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2070'); background-size: cover; background-attachment: fixed; display: flex; align-items: center; justify-content: center; border-bottom: 12px solid var(--f-red); }
+        .hero-title { font-size: clamp(3rem, 10vw, 6rem); color: white; text-transform: uppercase; letter-spacing: 5px; }
 
         /* Timeline */
         .timeline-container { position: relative; max-width: 1100px; margin: 60px auto; }
-        .timeline-container::after {
-            content: ''; position: absolute; width: 4px; background: var(--f-red);
-            top: 0; bottom: 0; left: 50%; margin-left: -2px;
-        }
-        .timeline-item { padding: 20px 40px; position: relative; width: 50%; cursor: pointer; }
+        .timeline-container::after { content: ''; position: absolute; width: 4px; background: var(--f-red); top: 0; bottom: 0; left: 50%; margin-left: -2px; }
+        .timeline-item { padding: 20px 50px; position: relative; width: 50%; cursor: pointer; }
         .timeline-item.left { left: 0; text-align: right; }
         .timeline-item.right { left: 50%; text-align: left; }
-        .timeline-dot {
-            width: 24px; height: 24px; background: var(--f-red); position: absolute;
-            border-radius: 50%; top: 40px; z-index: 10; border: 4px solid white;
-        }
-        .left .timeline-dot { right: -12px; }
-        .right .timeline-dot { left: -12px; }
-        .timeline-card {
-            background: white; border-radius: 15px; padding: 25px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: var(--transition);
-        }
-        .timeline-card:hover { transform: translateY(-10px); border-color: var(--f-red); box-shadow: 0 15px 40px rgba(139,0,0,0.1); }
+        .timeline-dot { width: 30px; height: 30px; background: var(--f-red); position: absolute; border-radius: 50%; top: 40px; z-index: 10; border: 5px solid white; }
+        .left .timeline-dot { right: -15px; } .right .timeline-dot { left: -15px; }
+        .timeline-card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.4s; }
+        .timeline-card:hover { transform: translateY(-10px); border-color: var(--f-red); }
 
         /* Game Hub */
-        .game-wrapper { background: var(--f-dark); padding: 80px 0; border-top: 10px solid var(--f-gold); color: white; }
+        .game-section { background: var(--f-dark); padding: 100px 0; color: white; border-top: 15px solid var(--f-red); }
+        .game-nav-btn { background: transparent; border: 2px solid var(--f-gold); color: var(--f-gold); padding: 15px; transition: 0.3s; height: 100%; width: 100%; border-radius: 15px; font-weight: bold; }
+        .game-nav-btn:hover { background: var(--f-gold); color: black; transform: scale(1.05); }
+
+        /* Memory Game Fix */
+        .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 1000px; margin: auto; }
         .m-card { height: 180px; perspective: 1000px; cursor: pointer; }
         .m-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
         .m-card.flipped .m-card-inner { transform: rotateY(180deg); }
-        .m-card-face {
-            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
-            border-radius: 15px; display: flex; align-items: center; justify-content: center;
-            padding: 15px; text-align: center; font-weight: bold; font-size: 0.85rem;
-        }
-        .m-card-front { background: #2a2a2a; color: var(--f-gold); border: 2px solid #444; font-size: 2rem; }
+        .m-card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; align-items: center; justify-content: center; padding: 15px; text-align: center; font-weight: bold; font-size: 0.85rem; }
+        .m-card-front { background: #222; color: var(--f-gold); border: 2px solid #444; font-size: 2.5rem; }
         .m-card-back { background: var(--f-red); color: white; transform: rotateY(180deg); border: 2px solid white; }
         .matched .m-card-back { background: #1b5e20 !important; }
 
-        /* Modals */
-        .modal-content { border-radius: 25px; border: none; overflow: hidden; }
-        .modal-header { background: var(--f-red); color: white; padding: 25px; }
-        .quote-box { border-left: 6px solid var(--f-gold); padding: 20px; background: #f9f9f9; font-style: italic; margin: 20px 0; }
+        /* Hacker Game */
+        #hacker-container { background: #000; border: 2px solid var(--neon); border-radius: 20px; height: 600px; position: relative; overflow: hidden; font-family: 'Share Tech Mono', monospace; }
+        .data-fragment { position: absolute; padding: 10px; border: 1px solid var(--neon); color: var(--neon); background: #000; cursor: pointer; z-index: 5; font-size: 0.8rem; max-width: 200px; }
 
-        @media (max-width: 992px) {
+        @media (max-width: 992px) { 
+            .memory-grid { grid-template-columns: repeat(2, 1fr); }
             .timeline-container::after { left: 40px; }
             .timeline-item { width: 100%; padding-left: 80px; text-align: left !important; }
             .timeline-item.right { left: 0; }
-            .timeline-dot { left: 28px !important; }
+            .timeline-dot { left: 25px !important; }
         }
     </style>
 </head>
 <body>
-    <section class="hero">
-    <div class="text-center animate__animated animate__fadeIn">
-        <h1 class="hero-title animate__animated animate__zoomIn">PRÁXIS</h1>
-        <p class="hero-subtitle lead text-uppercase font-sans">A Psicologia da Libertação em Paulo Freire</p>
-        <a href="#intro" class="btn btn-outline-light btn-lg mt-4 px-5 py-3 rounded-pill fw-bold">Entrar no Memorial</a>
+
+<section class="hero text-center">
+    <div class="container animate__animated animate__fadeIn">
+        <h1 class="hero-title">PRÁXIS</h1>
+        <p class="lead text-white font-sans text-uppercase tracking-widest">O Memorial da Consciência Crítica</p>
+        <a href="#intro" class="btn btn-outline-light btn-lg mt-5 px-5 py-3 rounded-pill fw-bold">Entrar na Investigação</a>
     </div>
 </section>
 
 <section id="intro" class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-9 text-center">
-            <h2 class="display-4 mb-4">A Ontologia do Vir-a-Ser</h2>
-            <p class="lead italic text-muted mb-5">"A leitura do mundo precede a leitura da palavra."</p>
-            <div style="text-align: justify; font-size: 1.15rem; line-height: 1.8;">
-                Este artefato tecnológico foi desenvolvido para a disciplina de <strong>Política Educacional e Gestão da Informática na Educação</strong>. O objetivo é publicizar os processos psicológicos que sustentam a transição da consciência ingênua para a <strong>Consciência Crítica</strong>. Explore a linha do tempo informativa e desafie-se no Laboratório de Práxis para consolidar os conceitos fundamentais da pedagogia freiriana.
+            <h2 class="display-4 mb-4">A Ontologia do Ser</h2>
+            <div style="text-align: justify; font-size: 1.2rem; line-height: 2;">
+                Este artefato tecnológico publiciza os processos psicológicos que sustentam a transição da consciência ingênua para a <strong>Consciência Crítica</strong>. Abaixo, explore a "Senda da Conscientização": uma base teórica sólida com 14 conceitos fundamentais. <strong>Recomendamos a leitura antes de entrar no Laboratório de Práxis.</strong>
             </div>
         </div>
     </div>
@@ -111,79 +80,84 @@
 
 <section id="timeline" class="timeline-section">
     <div class="container">
-        <h2 class="text-center mb-5 display-5 fw-bold">Senda da Conscientização</h2>
+        <h2 class="text-center mb-5 display-3 fw-bold">Senda da Conscientização</h2>
         <div class="timeline-container" id="timeline-box"></div>
     </div>
 </section>
 
-<section id="game-hub" class="game-wrapper">
-    <div class="container text-center text-white">
-        <h2 class="display-4 text-warning mb-4">Laboratório de Práxis</h2>
-        <p class="lead mb-5 opacity-75">Escolha um desafio (Rodadas de 5 perguntas):</p>
+<section id="game-hub" class="game-section">
+    <div class="container text-center">
+        <h2 class="display-4 text-warning fw-bold mb-5">Laboratório de Resistência</h2>
         
-        <div class="row g-4 justify-content-center mb-5" id="game-menu">
-            <div class="col-md-4">
-                <button class="btn btn-outline-warning w-100 p-4 shadow" onclick="showGame('memory')">
-                    <i class="bi bi-grid-3x3-gap fs-1 d-block mb-2"></i>
-                    <strong>Jogo de Memória</strong>
-                </button>
-            </div>
-            <div class="col-md-4">
-                <button class="btn btn-outline-warning w-100 p-4 shadow" onclick="showGame('classifier')">
-                    <i class="bi bi-ui-checks fs-1 d-block mb-2"></i>
-                    <strong>Classificador</strong>
-                </button>
-            </div>
-            <div class="col-md-4">
-                <button class="btn btn-outline-warning w-100 p-4 shadow" onclick="showGame('blanks')">
-                    <i class="bi bi-pencil-square fs-1 d-block mb-2"></i>
-                    <strong>Lacunas Críticas</strong>
-                </button>
-            </div>
+        <div id="game-menu" class="row g-4 justify-content-center mb-5">
+            <div class="col-md-3"><button class="game-nav-btn" onclick="showGame('memory')"><i class="bi bi-grid-3x3-gap fs-1 d-block"></i>MEMÓRIA</button></div>
+            <div class="col-md-3"><button class="game-nav-btn" onclick="showGame('classifier')"><i class="bi bi-ui-checks fs-1 d-block"></i>CLASSIFICADOR</button></div>
+            <div class="col-md-3"><button class="game-nav-btn" onclick="showGame('blanks')"><i class="bi bi-pencil-square fs-1 d-block"></i>LACUNAS</button></div>
+            <div class="col-md-3"><button class="game-nav-btn" onclick="showGame('hacker')"><i class="bi bi-shield-slash fs-1 d-block"></i>HACKER</button></div>
         </div>
 
-        <div id="display-jogos" class="p-4 rounded-4" style="min-height: 500px; background: rgba(255,255,255,0.05);">
+        <div id="game-display" class="p-4 rounded-5" style="min-height: 600px; background: rgba(255,255,255,0.03);">
             
             <div id="game-memory" class="game-content d-none">
-                <div class="row g-3 justify-content-center" id="memory-board"></div>
-                <button class="btn btn-outline-light mt-5" onclick="backToMenu()">Voltar ao Menu</button>
+                <div class="memory-grid mb-4" id="memory-board"></div>
+                <button class="btn btn-outline-warning" onclick="backToMenu()">Sair do Jogo</button>
             </div>
 
             <div id="game-classifier" class="game-content d-none">
-                <div id="classifier-play">
-                    <div class="mb-3 badge bg-warning text-dark font-sans" id="classifier-progress">Pergunta 1 de 5</div>
-                    <div id="scenario-card" class="bg-white text-dark p-4 rounded-4 shadow-lg mb-4 mx-auto" style="max-width: 600px; border-top: 10px solid var(--f-red);">
-                        <h4 id="scenario-text">Carregando...</h4>
+                <div id="c-play">
+                    <div class="d-flex justify-content-between mb-4" style="max-width:600px; margin:auto">
+                        <span class="badge bg-warning text-dark" id="c-step">1 de 5</span>
+                        <button class="btn btn-sm btn-outline-danger" onclick="backToMenu()">Sair</button>
+                    </div>
+                    <div id="scenario-card" class="bg-white text-dark p-4 rounded-4 shadow mb-4 mx-auto" style="max-width: 600px; border-top: 10px solid var(--f-red);">
+                        <h4 id="scenario-text">...</h4>
                     </div>
                     <div class="d-flex justify-content-center gap-3">
-                        <button class="btn btn-secondary btn-lg px-4" onclick="checkClassifier('B')">BANCÁRIO</button>
-                        <button class="btn btn-danger btn-lg px-4" onclick="checkClassifier('L')">LIBERTADOR</button>
+                        <button class="btn btn-secondary btn-lg px-4" onclick="checkC('B')">BANCÁRIO</button>
+                        <button class="btn btn-danger btn-lg px-4" onclick="checkC('L')">LIBERTADOR</button>
                     </div>
-                    <div id="classifier-feedback" class="mt-4 p-3 rounded d-none"></div>
+                    <div id="c-feedback" class="mt-4 p-3 rounded d-none"></div>
                 </div>
-                <div id="classifier-result" class="d-none animate__animated animate__fadeIn">
-                    <h2 class="display-4 text-warning">Fim da Rodada!</h2>
-                    <div class="fs-3 my-4" id="classifier-final-stats"></div>
-                    <button class="btn btn-warning btn-lg px-5 rounded-pill" onclick="initClassifier()">Reiniciar Desafio</button>
-                    <button class="btn btn-outline-light btn-lg px-5 rounded-pill ms-2" onclick="backToMenu()">Menu Principal</button>
+                <div id="c-result" class="d-none">
+                    <h2 class="text-warning">Ciclo Finalizado</h2>
+                    <div id="c-stats" class="fs-2 my-4"></div>
+                    <button class="btn btn-warning btn-lg px-5 rounded-pill" onclick="initClassifier()">Reiniciar</button>
                 </div>
             </div>
 
             <div id="game-blanks" class="game-content d-none">
-                <div id="blanks-play">
-                    <div class="mb-3 badge bg-warning text-dark font-sans" id="blanks-progress">Pergunta 1 de 5</div>
-                    <div class="bg-white text-dark p-4 rounded-4 shadow-lg mb-4 mx-auto" style="max-width: 700px;">
-                        <p id="blank-sentence" class="fs-4 italic"></p>
-                        <div id="blank-options" class="mt-4 d-flex flex-wrap gap-2 justify-content-center"></div>
+                <div id="b-play">
+                    <div class="d-flex justify-content-between mb-4" style="max-width:700px; margin:auto">
+                        <span class="badge bg-warning text-dark" id="b-step">1 de 5</span>
+                        <button class="btn btn-sm btn-outline-danger" onclick="backToMenu()">Sair</button>
                     </div>
-                    <div id="blanks-feedback" class="mt-4 p-3 rounded d-none"></div>
+                    <div class="bg-white text-dark p-4 rounded-4 shadow mb-4 mx-auto" style="max-width: 700px; border-top: 10px solid var(--f-red);">
+                        <p id="b-sentence" class="fs-4 italic text-center py-3"></p>
+                        <div id="b-options" class="mt-4 d-flex flex-wrap gap-2 justify-content-center"></div>
+                    </div>
+                    <div id="b-feedback" class="mt-4 p-3 rounded d-none"></div>
                 </div>
-                <div id="blanks-result" class="d-none animate__animated animate__fadeIn">
-                    <h2 class="display-4 text-warning">Resultado da Práxis</h2>
-                    <div class="fs-3 my-4" id="blanks-final-stats"></div>
-                    <button class="btn btn-warning btn-lg px-5 rounded-pill" onclick="initBlanks()">Tentar Novamente</button>
-                    <button class="btn btn-outline-light btn-lg px-5 rounded-pill ms-2" onclick="backToMenu()">Menu Principal</button>
+                <div id="b-result" class="d-none">
+                    <h2 class="text-warning">Resultado</h2>
+                    <div id="b-stats" class="fs-2 my-4"></div>
+                    <button class="btn btn-warning btn-lg px-5 rounded-pill" onclick="initBlanks()">Novo Ciclo</button>
                 </div>
+            </div>
+
+            <div id="game-hacker" class="game-content d-none">
+                <div id="hacker-container">
+                    <div class="status-hacker d-flex justify-content-between p-3 text-success">
+                        <span>SISTEMA: VIGILÂNCIA BANCÁRIA</span>
+                        <span>AUTONOMIA: <span id="h-pts">0</span></span>
+                    </div>
+                    <div id="h-screen" class="position-relative h-100">
+                        <div id="h-start" class="position-absolute top-50 start-50 translate-middle text-center w-75">
+                            <h2 class="text-success">ALGORITMO DETECTADO</h2>
+                            <button class="btn btn-outline-success mt-4" onclick="startH()">QUEBRAR VIGILÂNCIA</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-outline-danger mt-4" onclick="backToMenu()">Sair do Terminal</button>
             </div>
 
         </div>
@@ -192,372 +166,148 @@
 
 <div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content animate__animated animate__zoomIn">
-            <div class="modal-header">
-                <h3 class="modal-title fw-bold" id="modalTitle">Título</h3>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="modalBody"></div>
-        </div>
+        <div class="modal-content"><div class="modal-header"><h3 id="modalTitle" class="fw-bold"></h3><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body" id="modalBody"></div></div>
     </div>
 </div>
 
-<footer class="bg-black text-white py-5 text-center">
-    <div class="container small opacity-50 font-sans">
-        <p>Jonison, Angelo, Diego e Karine - MPIE | Mestrado 2026</p>
-    </div>
+<footer class="bg-black text-white py-5 text-center small opacity-50 font-sans">
+    <p>Professor Jónison A. dos Santos | IFMS Dourados-MS | Mestrado 2026</p>
 </footer>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-/**
- * MASTER DATABASE - 14 CONCEITOS FREIRIANOS
- * Esta base alimenta a Timeline, os Modais e os 3 Jogos.
- */
-const MASTER_DB = [
-    {
-        id: 1,
-        titulo: "Educação Bancária",
-        def: "O conhecimento como depósito passivo.",
-        psi: "Gera a 'Cultura do Silêncio' e atrofia a autonomia.",
-        texto: "Na educação bancária, o educador é o sujeito ativo que deposita conteúdos em educandos transformados em objetos. Psicologicamente, isso estabelece uma relação de dependência e submissão intelectual.",
-        cita: "Educação torna-se o ato de depositar, em que os educandos são os depositários.",
-        gap: "Na educação _______, o saber é um depósito feito pelo professor.",
-        img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600"
-    },
-    {
-        id: 2,
-        titulo: "Opressor Hospedado",
-        def: "Internalização da voz do dominante.",
-        psi: "Dualidade do Self: o medo da própria liberdade.",
-        texto: "O oprimido não apenas sofre a opressão, ele a 'hospeda'. Isso gera uma crise de identidade onde o indivíduo teme ser livre, pois sua única referência de 'ser humano' é a do opressor.",
-        cita: "O oprimido hospeda o opressor em si. Sua sombra o persegue.",
-        gap: "O oprimido teme a liberdade porque tem o opressor _______ em si.",
-        img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600"
-    },
-    {
-        id: 3,
-        titulo: "Inédito Viável",
-        def: "Ação que rompe situações-limite.",
-        psi: "Ativação da autoeficácia e superação do fatalismo.",
-        texto: "O inédito viável surge quando percebemos que o mundo não é um dado, mas um construído. É o momento psicológico de ruptura com o determinismo histórico.",
-        cita: "O inédito viável é algo que se alcança através da práxis libertadora.",
-        gap: "O inédito _______ é a solução que surge ao superarmos situações-limite.",
-        img: "https://images.unsplash.com/photo-1493612276216-ee3925520721?w=600"
-    },
-    {
-        id: 4,
-        titulo: "Ser Mais",
-        def: "A vocação ontológica para a humanização.",
-        psi: "Busca pela integridade psíquica contra a alienação.",
-        texto: "É a busca humana pela plenitude. Paulo Freire defende que nossa vocação é 'Ser Mais', enquanto a opressão nos força a ser menos.",
-        cita: "A desumanização não é vocação, é distorção da história.",
-        gap: "A desumanização é um fato, mas o _______ Mais é nossa vocação.",
-        img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600"
-    },
-    {
-        id: 5,
-        titulo: "Dialogicidade",
-        def: "Educação como encontro de sujeitos.",
-        psi: "Fortalecimento do Eu através da alteridade.",
-        texto: "O diálogo é o fenômeno humano por excelência. No diálogo, não há hierarquias rígidas, mas uma busca mútua por pronunciar e transformar o mundo.",
-        cita: "Ninguém educa ninguém, os homens se educam em comunhão.",
-        gap: "Sem _______, a educação torna-se mera manipulação autoritária.",
-        img: "https://images.unsplash.com/photo-1521791136364-798a7bc0d262?w=600"
-    },
-    {
-        id: 6,
-        titulo: "Conscientização",
-        def: "Percepção crítica das estruturas sociais.",
-        psi: "Transição da consciência ingênua para a crítica.",
-        texto: "A conscientização exige um mergulho na realidade. É o processo de desvelar as formas de opressão escondidas no cotidiano.",
-        cita: "A conscientização não pode existir fora da práxis.",
-        gap: "A _______ exige o mergulho na realidade para desvelar a opressão.",
-        img: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600"
-    },
-    {
-        id: 7,
-        titulo: "Invasão Cultural",
-        def: "Sobreposição de uma visão de mundo estranha.",
-        psi: "Violência simbólica que gera inferioridade.",
-        texto: "Quando o saber de um grupo é imposto sobre outro, destruindo sua identidade original. O invadido passa a ver sua cultura como 'atrasada'.",
-        cita: "Toda invasão cultural supõe a conquista e a manipulação.",
-        gap: "A _______ cultural anula a identidade do povo invadido.",
-        img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600"
-    },
-    {
-        id: 8,
-        titulo: "Práxis",
-        def: "Unidade entre Ação e Reflexão.",
-        psi: "Alinhamento entre pensar, sentir e agir.",
-        texto: "A práxis diferencia o humano. É a capacidade de alterar o mundo conscientemente, voltando-se para essa ação para refletir sobre ela.",
-        cita: "A práxis é reflexão e ação sobre o mundo para transformá-lo.",
-        gap: "A _______ é a união indissociável entre reflexão e ação.",
-        img: "https://images.unsplash.com/photo-1454165833767-027eeef1593e?w=600"
-    },
-    {
-        id: 9,
-        titulo: "Esperançar",
-        def: "Busca ativa e coletiva pela mudança.",
-        psi: "Ativação da resiliência e compromisso ético.",
-        texto: "Esperançar é o verbo da ação. Diferente da espera passiva, é a luta contínua por viabilizar o que é necessário.",
-        cita: "É preciso ter esperança, mas esperança do verbo esperançar.",
-        gap: "Não é apenas esperar, é _______: ir atrás e construir o novo.",
-        img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600"
-    },
-    {
-        id: 10,
-        titulo: "Leitura do Mundo",
-        def: "Percepção situada do contexto real.",
-        psi: "Formação da consciência histórica do indivíduo.",
-        texto: "A leitura da realidade precede a leitura da palavra. Alfabetizar é, antes de tudo, permitir que o sujeito entenda seu lugar no mundo.",
-        cita: "A leitura do mundo precede a leitura da palavra.",
-        gap: "A leitura do _______ precede a leitura da palavra escrita.",
-        img: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=600"
-    },
-    {
-        id: 11,
-        titulo: "Autonomia",
-        def: "Capacidade de autogestão do saber.",
-        psi: "Transição da heteronomia para a maturidade psíquica.",
-        texto: "A autonomia se constrói na decisão. Educar é fornecer as ferramentas para que o sujeito possa decidir com responsabilidade.",
-        cita: "A autonomia se constrói no exercício de decidir.",
-        gap: "A _______ do estudante se constrói no exercício de decidir.",
-        img: "https://images.unsplash.com/photo-1494173853114-8a5020972fd8?w=600"
-    },
-    {
-        id: 12,
-        titulo: "Rigor Metódico",
-        def: "Profundidade e seriedade no ato de conhecer.",
-        psi: "Desenvolvimento do pensamento crítico complexo.",
-        texto: "Freire exige o rigor. O educando crítico deve ser um pesquisador que não aceita o conhecimento simplista ou 'mastigado'.",
-        cita: "O educador crítico exige de si e dos outros o rigor metódico.",
-        gap: "O educador crítico exige de si e dos outros o _______ metódico.",
-        img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600"
-    },
-    {
-        id: 13,
-        titulo: "Círculo de Cultura",
-        def: "Espaço democrático de debate e criação.",
-        psi: "Socialização crítica e fortalecimento coletivo.",
-        texto: "No círculo, a hierarquia tradicional é quebrada. O conhecimento é construído através da troca de experiências mediadas pela realidade.",
-        cita: "No círculo de cultura, o educador também é educado.",
-        gap: "No _______ de cultura, o conhecimento nasce do debate fraterno.",
-        img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600"
-    },
-    {
-        id: 14,
-        titulo: "Temas Geradores",
-        def: "Palavras extraídas da realidade do aluno.",
-        psi: "Ancoragem afetiva e cognitiva do aprendizado.",
-        texto: "São situações ou palavras que têm forte carga emocional e social para o grupo, servindo como motor para a conscientização.",
-        cita: "A investigação do tema gerador é o ponto de partida do processo.",
-        gap: "Os temas _______ são o ponto de partida do processo educativo.",
-        img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800"
-    }
+const DB = [
+    { id: 1, titulo: "Educação Bancária", def: "O saber como depósito passivo.", psi: "Anulação da autonomia psíquica.", type: "B", gap: "Na educação _______, o aluno é apenas um depósito.", texto: "Processo onde o educador 'deposita' conteúdos em alunos transformados em recipientes vazios. Psicologicamente, isso gera a Cultura do Silêncio.", cita: "Educação torna-se o ato de depositar...", img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800" },
+    { id: 2, titulo: "Opressor Hospedado", def: "Internalização da voz dominante.", psi: "Dualidade: medo da liberdade.", type: "B", gap: "O oprimido teme a liberdade porque tem o _______ em si.", texto: "O sujeito teme a liberdade pois sua única referência humana é o dominador internalizado na sua psique.", cita: "O oprimido hospeda o opressor em si.", img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800" },
+    { id: 3, titulo: "Inédito Viável", def: "Ação que rompe situações-limite.", psi: "Ativação da autoeficácia crítica.", type: "L", gap: "O inédito _______ é a solução que surge ao superarmos limites.", texto: "Momento psicológico de ruptura com o fatalismo histórico: o amanhã não é um dado, é um construído.", cita: "O inédito viável se alcança através da práxis.", img: "https://images.unsplash.com/photo-1493612276216-ee3925520721?w=800" },
+    { id: 4, titulo: "Dialogicidade", def: "Educação como encontro de sujeitos.", psi: "Fortalecimento do Eu pelo Tu.", type: "L", gap: "Sem _______, a educação torna-se manipulação.", texto: "A essência da educação libertadora. Ninguém educa ninguém, os homens se educam em comunhão.", cita: "Os homens se educam em comunhão, mediados pelo mundo.", img: "https://images.unsplash.com/photo-1521791136364-798a7bc0d262?w=800" },
+    { id: 5, titulo: "Conscientização", def: "Percepção crítica da realidade.", psi: "Despertar da consciência política.", type: "L", gap: "A _______ exige o mergulho na realidade para ver a opressão.", texto: "Aprofundamento da tomada de consciência. É o desvelamento das estruturas de poder no cotidiano.", cita: "A conscientização não existe fora da práxis.", img: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800" },
+    { id: 6, titulo: "Ser Mais", def: "Vocação ontológica humana.", psi: "Busca pela integridade e autonomia.", type: "L", gap: "A desumanização é fato, mas o _______ Mais é nossa vocação.", texto: "A busca humana pela plenitude. A desumanização é uma distorção da história, não uma vocação.", cita: "A desumanização não é vocação, é distorção da história.", img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800" },
+    { id: 7, titulo: "Invasão Cultural", def: "Sobreposição de visões de mundo.", psi: "Sentimento de inferioridade simbólica.", type: "B", gap: "A _______ cultural anula a identidade do povo invadido.", texto: "O invasor retira a palavra do invadido e impõe a sua. Gera alienação cultural e inautenticidade.", cita: "Toda invasão cultural supõe conquista e manipulação.", img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800" },
+    { id: 8, titulo: "Práxis", def: "Ação + Reflexão sobre o mundo.", psi: "Alinhamento ético entre pensar e agir.", type: "L", gap: "A _______ é a união indissociável entre teoria e prática.", texto: "Unidade dialética. Sem reflexão é ativismo; sem ação é verbalismo.", cita: "A práxis é reflexão e ação sobre o mundo para transformá-lo.", img: "https://images.unsplash.com/photo-1454165833767-027eeef1593e?w=800" },
+    { id: 9, titulo: "Esperançar", def: "Busca ativa pela mudança social.", psi: "Resiliência e compromisso existencial.", type: "L", gap: "Não é apenas esperar, é _______: ir atrás do novo.", texto: "Verbo da ação. Diferente da esperança passiva, exige o movimento de construção do inédito viável.", cita: "É preciso ter esperança, mas esperança do verbo esperançar.", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800" },
+    { id: 10, titulo: "Leitura do Mundo", def: "Percepção do contexto antes da palavra.", psi: "Formação da consciência histórica.", type: "L", gap: "A leitura do _______ precede a leitura da palavra escrita.", texto: "A alfabetização política antecede a silábica. O sujeito deve ler sua realidade para dar sentido à letra.", cita: "A leitura do mundo precede a leitura da palavra.", img: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800" },
+    { id: 11, titulo: "Autonomia", def: "Capacidade de governar o próprio saber.", psi: "Maturidade e independência psíquica.", type: "L", gap: "A _______ do estudante se constrói no exercício de decidir.", texto: "A autonomia se constrói na decisão. Ninguém é autônomo primeiro para depois decidir.", cita: "A autonomia se constrói no exercício de decidir.", img: "https://images.unsplash.com/photo-1494173853114-8a5020972fd8?w=800" },
+    { id: 12, titulo: "Rigor Metódico", def: "Seriedade no ato de pesquisar.", psi: "Pensamento complexo contra o senso comum.", type: "L", gap: "O educador crítico exige de si o _______ metódico.", texto: "O educando deve ser um pesquisador crítico, não um repetidor de fórmulas facilitadas.", cita: "O educador crítico exige de si o rigor metódico.", img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800" },
+    { id: 13, titulo: "Círculo de Cultura", def: "Espaço democrático de debate.", psi: "Socialização crítica e empoderamento.", type: "L", gap: "No _______ de cultura, o conhecimento nasce do debate fraterno.", texto: "Ambiente onde a hierarquia é quebrada em favor da comunhão de saberes mediada pelo mundo.", cita: "No círculo de cultura, o educador também é educado.", img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800" },
+    { id: 14, titulo: "Temas Geradores", def: "Conceitos da realidade viva do aluno.", psi: "Ancoragem cognitiva do aprendizado.", type: "L", gap: "Os temas _______ são o ponto de partida do processo.", texto: "Situações extraídas do universo vocabular e social dos educandos que motorizam o debate crítico.", cita: "A investigação do tema é o ponto de partida do processo educativo.", img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800" }
 ];
-// --- LÓGICA DE CONTROLE E NAVEGAÇÃO ---
+let gS = { c:{s:0,c:0,w:0,p:[]}, b:{s:0,c:0,w:0,p:[]} };
+let hI, hPts=0;
 
-/**
- * Inicializa a Timeline com 6 itens principais
- */
-function renderTimeline() {
-    const box = document.getElementById('timeline-box');
-    box.innerHTML = '';
-    const items = MASTER_DB.slice(0, 6); 
+// CONTROLE DE TELAS
+function showGame(id) {
+    stopH();
+    document.getElementById('game-menu').classList.add('d-none');
+    document.querySelectorAll('.game-content').forEach(c => c.classList.add('d-none'));
+    document.getElementById('game-'+id).classList.remove('d-none');
+    if(id==='memory') initM(); 
+    if(id==='classifier') initClassifier(); 
+    if(id==='blanks') initBlanks();
+}
 
-    items.forEach((it, idx) => {
-        const side = idx % 2 === 0 ? 'left' : 'right';
-        box.innerHTML += `
-            <div class="timeline-item ${side} animate__animated animate__fadeInUp" onclick="openInfo(${it.id})">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">
-                    <h4 class="text-danger fw-bold">${it.titulo}</h4>
-                    <p class="mb-0 small">${it.def}</p>
-                    <hr class="my-2">
-                    <span class="badge bg-danger">Clique para Aprofundar</span>
-                </div>
-            </div>
-        `;
+function backToMenu() {
+    stopH();
+    document.querySelectorAll('.game-content').forEach(c => c.classList.add('d-none'));
+    document.getElementById('game-menu').classList.remove('d-none');
+}
+
+// 1. MEMORIA (Fixed)
+let mF=null, mS=null, mL=false;
+function initM() {
+    const b = document.getElementById('memory-board'); b.innerHTML = ''; mF=mS=null; mL=false;
+    const s = [...DB].sort(()=>0.5-Math.random()).slice(0,6);
+    let cards = []; s.forEach(it=>{ cards.push({t:it.titulo, m:it.id}); cards.push({t:it.def, m:it.id}); });
+    cards.sort(()=>0.5-Math.random()).forEach(c=>{
+        const d = document.createElement('div'); d.className='m-card'; d.dataset.m=c.m;
+        d.innerHTML = `<div class="m-card-inner"><div class="m-card-face m-card-front">?</div><div class="m-card-face m-card-back">${c.t}</div></div>`;
+        d.onclick = () => { if(mL || d===mF || d.classList.contains('matched')) return; d.classList.add('flipped'); if(!mF){mF=d; return;} mS=d; checkM(); };
+        b.appendChild(d);
     });
 }
+function checkM() { if(mF.dataset.m===mS.dataset.m){ mF.classList.add('matched'); mS.classList.add('matched'); mF=null; mS=null; } else { mL=true; setTimeout(()=>{mF.classList.remove('flipped'); mS.classList.remove('flipped'); mF=null; mS=null; mL=false;},1000); } }
 
-/**
- * Gerencia a troca de abas entre os jogos
- */
-function showGame(gameId) {
-    // Esconde todos os jogos
-    document.querySelectorAll('.game-content').forEach(c => c.classList.add('d-none'));
-    // Mostra o selecionado
-    document.getElementById('game-' + gameId).classList.remove('d-none');
-    
-    // Rola suavemente até o jogo
-    document.getElementById('game-hub').scrollIntoView({ behavior: 'smooth' });
+// 2. CLASSIFICADOR (5 Rodadas)
+function initClassifier() {
+    gS.c = { s:0, c:0, w:0, p:[...DB].sort(()=>0.5-Math.random()).slice(0,5) };
+    document.getElementById('c-play').classList.remove('d-none'); document.getElementById('c-result').classList.add('d-none');
+    renderC();
+}
+function renderC() {
+    if(gS.c.s >= 5){ showRC(); return; }
+    const it = gS.c.p[gS.c.s];
+    document.getElementById('c-step').innerText = `${gS.c.s + 1} de 5`;
+    document.getElementById('scenario-text').innerText = (it.type==='B') ? `Prática Detectada: ${it.titulo}. Analise a natureza.` : `Prática Detectada: ${it.titulo}. Analise a natureza.`;
+    document.getElementById('c-feedback').classList.add('d-none');
+}
+function checkC(ans) {
+    const f = document.getElementById('c-feedback'); f.classList.remove('d-none');
+    if(ans === gS.c.p[gS.c.s].type){ gS.c.c++; f.className="mt-4 p-2 bg-success text-white rounded"; f.innerText="Correto! Percepção Crítica."; }
+    else { gS.c.w++; f.className="mt-4 p-2 bg-danger text-white rounded"; f.innerText="Incorreto. Prática Alienante."; }
+    gS.c.s++; setTimeout(renderC, 1500);
+}
+function showRC() { document.getElementById('c-play').classList.add('d-none'); document.getElementById('c-result').classList.remove('d-none'); document.getElementById('c-stats').innerHTML = `Acertos: ${gS.c.c} | Erros: ${gS.c.w}`; }
 
-    // Inicializa o jogo específico
-    if(gameId === 'memory') initMemory();
-    if(gameId === 'classifier') nextClassifier();
-    if(gameId === 'blanks') initBlanks();
+// 3. LACUNAS (5 Rodadas)
+function initBlanks() {
+    gS.b = { s:0, c:0, w:0, p:[...DB].sort(()=>0.5-Math.random()).slice(0,5) };
+    document.getElementById('b-play').classList.remove('d-none'); document.getElementById('b-result').classList.add('d-none');
+    renderB();
+}
+function renderB() {
+    if(gS.b.s >= 5){ showRB(); return; }
+    const it = gS.b.p[gS.b.s];
+    document.getElementById('b-step').innerText = `${gS.b.s + 1} de 5`;
+    document.getElementById('b-sentence').innerText = it.gap.replace("_______", "__________");
+    document.getElementById('b-feedback').classList.add('d-none');
+    let opts = [it.titulo]; while(opts.length<4){ let r = DB[Math.floor(Math.random()*DB.length)].titulo; if(!opts.includes(r)) opts.push(r); }
+    opts.sort(()=>0.5-Math.random());
+    const box = document.getElementById('b-options'); box.innerHTML = '';
+    opts.forEach(o => { box.innerHTML += `<button class="btn btn-warning fw-bold px-3 m-1" onclick="checkB('${o}')">${o}</button>`; });
+}
+function checkB(ans) {
+    const f = document.getElementById('b-feedback'); f.classList.remove('d-none');
+    if(ans === gS.b.p[gS.b.s].titulo){ gS.b.c++; f.className="mt-4 p-2 bg-success text-white rounded"; f.innerText="Perfeito!"; }
+    else { gS.b.w++; f.className="mt-4 p-2 bg-danger text-white rounded"; f.innerText="Incorreto."; }
+    gS.b.s++; setTimeout(renderB, 1500);
+}
+function showRB() { document.getElementById('b-play').classList.add('d-none'); document.getElementById('b-result').classList.remove('d-none'); document.getElementById('b-stats').innerHTML = `Acertos: ${gS.b.c} | Erros: ${gS.b.w}`; }
+
+// 4. HACKER
+function startH() {
+    hPts=0; document.getElementById('h-pts').innerText=hPts; document.getElementById('h-start').classList.add('d-none');
+    hI = setInterval(createF, 1500);
+}
+function stopH() { clearInterval(hI); document.querySelectorAll('.data-fragment').forEach(f=>f.remove()); document.getElementById('h-start').classList.remove('d-none'); }
+function createF() {
+    const it = DB[Math.floor(Math.random()*DB.length)];
+    const el = document.createElement('div'); el.className='data-fragment'; el.innerText=it.titulo;
+    el.style.left = Math.random()*70+'%'; el.style.top = '-50px';
+    if(it.type==='B') el.style.borderColor = 'var(--danger)';
+    document.getElementById('h-screen').appendChild(el);
+    let pos = -50;
+    const move = setInterval(()=>{
+        pos += 2; el.style.top = pos+'px';
+        if(pos > 550){ clearInterval(move); el.remove(); }
+    },30);
+    el.onclick = () => { clearInterval(move); hPts += (it.type==='B' ? 10 : -15); document.getElementById('h-pts').innerText=hPts; el.remove(); };
 }
 
-/**
- * Abre o Modal com Densidade de Conteúdo
- */
+// TIMELINE & MODALS
+function renderTimeline() {
+    const b = document.getElementById('timeline-box'); b.innerHTML = '';
+    DB.forEach((it, idx)=>{
+        const s = idx%2===0?'left':'right';
+        b.innerHTML += `<div class="timeline-item ${s} animate__animated animate__fadeInUp" onclick="openInfo(${it.id})"><div class="timeline-dot"></div><div class="timeline-card"><h4>${it.titulo}</h4><p class="small mb-0">${it.def}</p></div></div>`;
+    });
+}
 function openInfo(id) {
-    const it = MASTER_DB.find(x => x.id === id);
+    const it = DB.find(x=>x.id===id);
     document.getElementById('modalTitle').innerText = it.titulo;
-    document.getElementById('modalBody').innerHTML = `
-        <div class="row">
-            <div class="col-lg-5 mb-4 mb-lg-0">
-                <img src="${it.img}" class="img-fluid rounded-5 shadow-lg mb-4" alt="${it.titulo}">
-                <div class="p-4 bg-white border-start border-danger border-5 shadow-sm">
-                    <h6 class="text-danger fw-bold font-sans">IMPLICAÇÃO PSICOLÓGICA</h6>
-                    <p class="small mb-0">${it.psi}</p>
-                </div>
-            </div>
-            <div class="col-lg-7">
-                <h5 class="fw-bold mb-3 font-sans border-bottom pb-2">Fundamentação Crítica</h5>
-                <p class="academic-text" style="font-size: 1.1rem;">${it.texto}</p>
-                <div class="quote-box">
-                    <i class="bi bi-quote fs-1 text-danger"></i>
-                    <p class="mb-0 fs-5">"${it.cita}"</p>
-                    <footer class="text-end mt-2 text-muted">— Paulo Freire</footer>
-                </div>
-            </div>
-        </div>
-    `;
+    document.getElementById('modalBody').innerHTML = `<div class="row"><div class="col-md-4"><img src="${it.img}" class="img-fluid rounded shadow mb-3"></div><div class="col-md-8"><h5>Análise Psico-Pedagógica</h5><p>${it.texto}</p><p><strong>Impacto Psicológico:</strong> ${it.psi}</p><div class="p-3 bg-light border-start border-danger border-4 font-italic">"${it.cita}"</div></div></div>`;
     new bootstrap.Modal(document.getElementById('infoModal')).show();
 }
 
-// --- 1. JOGO DE MEMÓRIA (Sorteio 6 de 14) ---
-let memoryFirst = null, memorySecond = null, memoryLock = false;
-
-function initMemory() {
-    const board = document.getElementById('memory-board');
-    board.innerHTML = '';
-    memoryFirst = null; memorySecond = null; memoryLock = false;
-
-    // Sorteia 6 itens de 14
-    const selected = [...MASTER_DB].sort(() => 0.5 - Math.random()).slice(0, 6);
-    let cardsData = [];
-    selected.forEach(it => {
-        cardsData.push({ text: it.titulo, match: it.id });
-        cardsData.push({ text: it.def, match: it.id });
-    });
-    cardsData.sort(() => 0.5 - Math.random());
-
-    cardsData.forEach(data => {
-        const col = document.createElement('div');
-        col.className = 'col-6 col-md-3 col-lg-2';
-        col.innerHTML = `
-            <div class="m-card" data-match="${data.match}" onclick="flipMemory(this)">
-                <div class="m-card-inner">
-                    <div class="m-card-face m-card-front"><i class="bi bi-puzzle"></i></div>
-                    <div class="m-card-face m-card-back">${data.text}</div>
-                </div>
-            </div>`;
-        board.appendChild(col);
-    });
-}
-
-function flipMemory(card) {
-    if (memoryLock || card === memoryFirst || card.classList.contains('matched')) return;
-    card.classList.add('flipped');
-    if (!memoryFirst) { memoryFirst = card; return; }
-    memorySecond = card;
-    checkMemory();
-}
-
-function checkMemory() {
-    const isMatch = memoryFirst.dataset.match === memorySecond.dataset.match;
-    if (isMatch) {
-        memoryFirst.classList.add('matched'); memorySecond.classList.add('matched');
-        memoryFirst = null; memorySecond = null;
-    } else {
-        memoryLock = true;
-        setTimeout(() => {
-            memoryFirst.classList.remove('flipped'); memorySecond.classList.remove('flipped');
-            memoryFirst = null; memorySecond = null; memoryLock = false;
-        }, 1200);
-    }
-}
-
-// --- 2. CLASSIFICADOR DE PRÁXIS ---
-let currentClassifier = null;
-
-function nextClassifier() {
-    const feedback = document.getElementById('classifier-feedback');
-    feedback.className = "mt-4 p-3 rounded d-none";
-    
-    // Filtra alguns libertadores para o jogo
-    const pool = MASTER_DB.filter(x => x.id !== 1 && x.id !== 2 && x.id !== 7);
-    const randomLibertador = pool[Math.floor(Math.random() * pool.length)];
-    const bancarios = MASTER_DB.filter(x => x.id === 1 || x.id === 2 || x.id === 7);
-    const randomBancario = bancarios[Math.floor(Math.random() * bancarios.length)];
-
-    currentClassifier = Math.random() > 0.5 ? 
-        { t: `Cenário: O mediador propõe que o grupo investigue os ${randomLibertador.titulo} para agir sobre a realidade.`, c: 'L' } :
-        { t: `Cenário: O professor dita o conceito de ${randomBancario.titulo} e exige silêncio para memorização.`, c: 'B' };
-
-    document.getElementById('scenario-text').innerText = currentClassifier.t;
-}
-
-function checkClassifier(choice) {
-    const feedback = document.getElementById('classifier-feedback');
-    feedback.classList.remove('d-none');
-    if (choice === currentClassifier.c) {
-        feedback.className = "mt-4 p-3 bg-success text-white rounded animate__animated animate__bounceIn";
-        feedback.innerText = "Correto! Você identificou a natureza da prática.";
-        setTimeout(nextClassifier, 2000);
-    } else {
-        feedback.className = "mt-4 p-3 bg-warning text-dark rounded animate__animated animate__shakeX";
-        feedback.innerText = "Ops! Esta prática contradiz a autonomia do sujeito.";
-    }
-}
-
-// --- 3. LACUNAS CRÍTICAS ---
-let currentBlank = null;
-
-function initBlanks() {
-    currentBlank = MASTER_DB[Math.floor(Math.random() * MASTER_DB.length)];
-    document.getElementById('blank-sentence').innerText = currentBlank.gap.replace("_______", "__________");
-    
-    const optionsBox = document.getElementById('blank-options');
-    optionsBox.innerHTML = '';
-    document.getElementById('blanks-feedback').classList.add('d-none');
-
-    let opts = [currentBlank.titulo];
-    while(opts.length < 4) {
-        let r = MASTER_DB[Math.floor(Math.random() * MASTER_DB.length)].titulo;
-        if(!opts.includes(r)) opts.push(r);
-    }
-    opts.sort(() => 0.5 - Math.random());
-    
-    opts.forEach(o => {
-        optionsBox.innerHTML += `<button class="btn btn-warning btn-lg font-sans fw-bold px-4" onclick="checkBlank('${o}')">${o}</button>`;
-    });
-}
-
-function checkBlank(opt) {
-    const feedback = document.getElementById('blanks-feedback');
-    feedback.classList.remove('d-none');
-    if(opt === currentBlank.titulo) {
-        feedback.className = "mt-4 p-3 bg-success text-white rounded animate__animated animate__fadeInUp";
-        feedback.innerText = "Excelente! A teoria está sendo assimilada com rigor.";
-        setTimeout(initBlanks, 2500);
-    } else {
-        feedback.className = "mt-4 p-3 bg-danger text-white rounded animate__animated animate__shakeX";
-        feedback.innerText = "Tente outra vez. O sentido da frase exige outro conceito.";
-    }
-}
-
-// Inicialização Geral
-window.onload = () => {
-    window.scrollTo(0, 0);
-    renderTimeline();
-    // Inicia o Hub com o jogo de memória pré-carregado mas oculto
-    initMemory(); 
-};
+window.onload = () => { renderTimeline(); window.scrollTo(0,0); };
 </script>
 </body>
 </html>
